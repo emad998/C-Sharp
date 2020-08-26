@@ -1,0 +1,28 @@
+@model Post
+
+
+<div class="container">
+    <a asp-controller="Posts" asp-action="All">All Posts</a>
+    <div class="card shadow p-3 rounded">
+            <h4>
+            @Model.Topic
+            </h4>
+            <p>
+                @Model.Body
+            </p>
+            <img src="@Model.ImgUrl" alt="Post">
+            <small class="text-muted">
+                Submitted: @Model.CreatedAt
+            </small>
+            <img src="@Model.ImgUrl" alt="@Model.Topic" class="card-img-bottom">
+
+            <div class="card-footer">
+                <form asp-controller="Posts" asp-action="Delete" asp-route-postId="@Model.PostId" method="POST" class="d-inline-block mr-1">
+
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+                <a asp-controller="Posts" asp-action="Edit" asp-route-postId="@Model.PostId" class="btn btn-warning">Edit</a>
+            </div>
+        </div>
+
+</div>

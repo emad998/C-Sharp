@@ -1,0 +1,101 @@
+<h1>Welcome @Context.Session.GetString("UserName") </h1>
+<h1>Success</h1>
+  <form asp-area="" asp-controller="Home" asp-action="Logout" method="POST">
+    <button class="btn btn-link">
+        Logout
+    </button>
+</form>
+
+<h1>Dojo Activity Center</h1>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      
+      <th scope="col">Activity</th>
+      <th scope="col">Date and Time</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Event Coordinator</th>
+      <th scope="col">Number of Participants</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      @foreach (var picnic in ViewBag.AllPicnics)
+      {
+        <tr>
+      <td><a href="/picnic/@picnic.PicnicId">@picnic.Title</a></td>
+      @{
+        DateTime TimeOfPicnic = @picnic.PicnicDate;
+        string FormattedDate = TimeOfPicnic.ToString("MM/dd/yyyy");
+      }
+      <td>@FormattedDate at @picnic.Time</td>
+      <td>@picnic.DurationNumber @picnic.DurationKind</td>
+      <td>@picnic.Creator.FirstName</td>
+      <td>@picnic.Participants.Count</td>
+
+
+
+
+
+
+
+      <td>@if(picnic.UserId == ViewBag.LoggedUser)
+        {
+          <form  asp-controller="Home" asp-action="Delete" asp-route-id="@picnic.PicnicId" method="POST">
+          <button class="btn btn-link">
+              Delete
+          </button>
+          </form>
+        } else {
+
+               
+          <td>
+            @{
+              bool IsAttending = false;
+            
+
+          @foreach (var guest in picnic.Participants)
+          {
+              if(guest.UserId == ViewBag.LoggedUser)
+              {
+                  IsAttending = true;
+              }
+                 
+              
+                
+              
+              
+               
+              
+          }
+          if(IsAttending){
+            <form asp-controller="Home" asp-action="RemoveParticipant" asp-route-id="@picnic.PicnicId" method="POST">
+            <button>UnJoin</button>
+            </form>
+          }  else {
+
+                <form  asp-controller="Home" asp-action="AddParticipant" asp-route-id="@picnic.PicnicId" method="POST">
+            <button class="btn btn-link">
+                Join
+            </button>
+            </form>
+
+          }
+          }
+            
+
+          </td>
+        }
+      </td>
+      </tr>
+      }
+    
+   
+  </tbody>
+</table>
+
+
+<a href="/new">Add Picnic</a>

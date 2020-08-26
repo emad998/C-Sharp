@@ -1,0 +1,26 @@
+﻿@model List<Chef>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Check out our roster of Chefs!</h1>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+
+    
+    @foreach (Chef chef in Model)
+    {
+         var today = DateTime.Today;
+         var age = today.Year - chef.DateOfBirth.Year;
+        <p>@chef.FirstName @chef.LastName Age: @age Dishes count: @chef.Dishes.Count</p>
+        
+    }
+
+
+
+
+
+
+
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

@@ -1,0 +1,47 @@
+@model Post
+
+@{
+  int? uid = @Context.Session.GetInt32("UserId");
+}
+
+<div class="container">
+  <div class="card shadow-sm rounded mx-auto w-75">
+    <h4 class="card-title text-center bg-dark text-light py-2">
+        @Model.Topic
+    </h4>
+    <div class="card-body">
+      <p class="card-text">
+        @Model.Body
+      </p>
+      <small class="text-muted">
+        By: @Model.Author.FullName() | On: @Model.CreatedAt 
+      </small>
+
+    <img class="card-img-bottom" src="@Model.ImgUrl" alt="@Model.Topic">
+
+    @* if the user in session is the author *@
+    @if (uid == Model.UserId)
+    {
+      <div class="card-footer">
+        <form
+          asp-controller="Posts"
+          asp-action="Delete"
+          asp-route-postId="@Model.PostId"
+          method="POST"
+          class="d-inline-block mr-1"
+        >
+          <button class="btn btn-danger">Delete</button>
+        </form>
+
+          <a
+            asp-controller="Posts"
+            asp-action="Edit"
+            asp-route-postId="@Model.PostId"
+            class="btn btn-warning"
+          >
+            Edit
+          </a>
+      </div>
+    }
+  </div>
+</div>

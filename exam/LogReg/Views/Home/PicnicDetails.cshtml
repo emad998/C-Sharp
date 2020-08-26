@@ -1,0 +1,62 @@
+<h1>Dojo Activity Center</h1>
+
+
+<form asp-area="" asp-controller="Home" asp-action="Logout" method="POST">
+        <button class="btn btn-link">
+            Logout
+        </button>
+    </form>
+
+<h1>@ViewBag.SelectedPicnic.Title</h1>
+
+<h2>Event Coordinator: @ViewBag.SelectedUser.Creator.FirstName</h2>
+
+<h2>Description: @ViewBag.SelectedPicnic.Description</h2>
+
+<h2>Participants: 
+    @foreach (var participant in ViewBag.SelectedPicnic.Participants)
+    {
+        <li>@participant.User.FirstName</li>
+    }
+
+
+</h2>
+
+
+@if(ViewBag.SelectedUser.Creator.UserId == ViewBag.LoggedUser)
+        {
+          <form  asp-controller="Home" asp-action="Delete" asp-route-id="@ViewBag.SelectedUser.PicnicId" method="POST">
+          <button class="btn btn-link">
+              Delete
+          </button>
+          </form>
+        } else {
+            
+            bool IsAttending = false;   
+
+            @foreach (var participant in ViewBag.SelectedPicnic.Participants)
+            {
+                if(participant.UserId == ViewBag.LoggedUser)
+              {
+                  IsAttending = true;
+              }
+
+
+            }
+            if(IsAttending){
+            <form asp-controller="Home" asp-action="RemoveParticipant" asp-route-id="@ViewBag.SelectedPicnic.PicnicId" method="POST">
+            <button>UnJoin</button>
+            </form>
+          }  else {
+
+                <form  asp-controller="Home" asp-action="AddParticipant" asp-route-id="@ViewBag.SelectedPicnic.PicnicId" method="POST">
+            <button class="btn btn-link">
+                Join
+            </button>
+            </form>
+
+          }
+
+
+            
+        }

@@ -1,0 +1,12 @@
+<h1>@ViewBag.SelectedWedding.WedderOne & @ViewBag.SelectedWedding.WedderTwo Wedding</h1>
+
+<h2>@ViewBag.SelectedWedding.Date</h2>
+
+<h3>Guests:
+    <ul>
+        @foreach (var guest in ViewBag.SelectedWedding.Guests)
+        {
+            <li>@guest.User.FirstName @guest.User.LastName</li>
+        }
+    </ul>
+</h3>

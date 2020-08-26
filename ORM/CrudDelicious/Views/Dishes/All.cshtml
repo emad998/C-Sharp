@@ -1,0 +1,30 @@
+@model List<Dish>
+
+<div class="container">
+    <h2>All Dishes</h2>
+    @foreach (Dish dish in Model)
+    {
+        <div class="card shadow p-3 rounded">
+            <h4>
+                <a asp-controller="Dishes" asp-action="Details" asp-route-DishId="@dish.DishId">@dish.Name</a>
+            </h4>
+            <p>
+                Dish Chef: @dish.Chef
+            </p>
+            <p>
+                Tastiness: @dish.Tastiness
+            </p>
+
+            <p>
+                Calories: @dish.Calories
+            </p>
+
+            <p>
+                Description: @dish.Description
+            </p>
+            <small class="text-muted">
+                Submitted: @dish.CreatedAt
+            </small>
+        </div>
+    }
+</div>

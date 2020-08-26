@@ -1,0 +1,93 @@
+
+<h1>Success</h1>
+<form asp-area="" asp-controller="Home" asp-action="Logout" method="POST">
+    <button class="btn btn-link">
+        Logout (@Context.Session.GetString("UserName"))
+    </button>
+</form>
+
+<h1>Welcome to Wedding Planner</h1>
+
+
+
+    <table class="table">
+  <thead>
+    <tr>
+      
+      <th scope="col">Wedding</th>
+      <th scope="col">Date</th>
+      <th scope="col">Guest</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      @foreach (var wedding in ViewBag.AllWeddings)
+      {
+        <tr>
+      <td><a href="/wedding/@wedding.WeddingId">@wedding.WedderOne & @wedding.WedderTwo</a></td>
+      <td>@wedding.Date</td>
+      <td>@wedding.Guests.Count</td>
+      <td>@if(wedding.UserId == ViewBag.LoggedUser)
+        {
+          <form  asp-controller="Home" asp-action="Delete" asp-route-id="@wedding.WeddingId" method="POST">
+          <button class="btn btn-link">
+              Delete
+          </button>
+          </form>
+        } else {
+
+                @* if(wedding.Guests.Count == 0){
+                  <form  asp-controller="Home" asp-action="AddGuest" asp-route-id="@wedding.WeddingId" method="POST">
+                      <button class="btn btn-link">
+                          RSVP
+                      </button>
+                      </form>
+                } *@
+          <td>
+            @{
+              bool IsAttending = false;
+            
+
+          @foreach (var guest in wedding.Guests)
+          {
+              if(guest.UserId == ViewBag.LoggedUser)
+              {
+                  IsAttending = true;
+              }
+                 
+              
+                
+              
+              
+               
+              
+          }
+          if(IsAttending){
+            <form asp-controller="Home" asp-action="RemoveGuest" asp-route-id="@wedding.WeddingId" method="POST">
+            <button>UnRsvp</button>
+            </form>
+          }  else {
+
+                <form  asp-controller="Home" asp-action="AddGuest" asp-route-id="@wedding.WeddingId" method="POST">
+            <button class="btn btn-link">
+                RSVP
+            </button>
+            </form>
+
+          }
+          }
+            
+
+          </td>
+        }
+      </td>
+      </tr>
+      }
+    
+   
+  </tbody>
+</table>
+
+
+<a href="/newWedding" class="btn btn-danger">Create a New Wedding</a>

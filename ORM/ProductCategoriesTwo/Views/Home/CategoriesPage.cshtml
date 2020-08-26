@@ -1,0 +1,21 @@
+@model AddCategoryWrapper
+
+
+<form asp-action="CategoriesCreate" asp-controller="Home" method="POST">
+  <div class="form-group">
+    <label asp-for="CatForm.Name">Name</label>
+    <span asp-validation-for="CatForm.Name"></span>
+    <input type="text" class="form-control" asp-for="CatForm.Name" aria-describedby="emailHelp" placeholder="Enter Name">
+    
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+<h1>All Categories</h1>
+
+@foreach (var category in Model.AllCategories)
+{
+    <p>@category.Name</p>
+}

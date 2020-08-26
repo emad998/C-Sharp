@@ -1,0 +1,30 @@
+@model AddCategoryToProductWrapper
+
+
+<h1>@Model.ToDisplay.Name</h1>
+
+<form asp-action="AddingCategoryToProduct" asp-controller="Home" asp-route-id="@Model.ToDisplay.ProductId" method="post">
+                <div class="form-group row">
+                    <label asp-for="AssociationForm.CategoryId" class="col-sm-4">Category: </label>
+                    <select asp-for="AssociationForm.CategoryId" class="col-sm-8">
+                        @foreach(Category category in Model.CatDropdown)
+                        {
+                            <option value="@category.CategoryId">@category.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <input type="submit" value="Submit" class="col-sm-4 offset-sm-4 btn btn-primary">
+                </div>
+            </form>
+
+
+<ul>
+
+
+@foreach (var cat in Model.ToDisplay.Associations)
+{
+    <li>@cat.Category.Name</li>
+}
+
+</ul>

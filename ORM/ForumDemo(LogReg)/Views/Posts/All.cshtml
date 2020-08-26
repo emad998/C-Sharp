@@ -1,0 +1,36 @@
+@*
+  @model lowercase m to specify the data type of the view model
+  @Model capital m to access the data
+*@
+@model List<Post>
+
+<div class="container">
+  <h2 class="text-center">All Posts</h2>
+  <hr>
+
+  @foreach (Post post in Model)
+  {
+    <div class="card shadow-sm rounded mx-auto w-50 mb-4">
+      <h4 class="card-title text-center bg-dark text-light py-2">
+        <a
+          asp-controller="Posts"
+          asp-action="Details"
+          asp-route-PostId="@post.PostId"
+        >
+          @post.Topic
+        </a>
+      </h4>
+      <div class="card-body">
+        <p class="card-text">
+          @post.Body
+        </p>
+      <small class="text-muted">
+        Submitted: @post.CreatedAt
+      </small>
+      </div>
+
+      <img class="card-img-bottom" src="@post.ImgUrl" alt="@post.Topic">
+      
+    </div>  
+  }
+</div>

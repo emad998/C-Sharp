@@ -1,0 +1,20 @@
+@model List<Post>
+
+<div class="container">
+    <h2>All Posts</h2>
+    @foreach (Post post in Model)
+    {
+        <div class="card shadow p-3 rounded">
+            <h4>
+                <a asp-controller="Posts" asp-action="Details" asp-route-PostId="@post.PostId">@post.Topic</a>
+            </h4>
+            <p>
+                @post.Body
+            </p>
+            <img src="@post.ImgUrl" alt="Post">
+            <small class="text-muted">
+                Submitted: @post.CreatedAt
+            </small>
+        </div>
+    }
+</div>
